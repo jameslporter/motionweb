@@ -23,17 +23,9 @@ if($pageTitle = $view->head()->title()) {
     <![endif]-->
 
     <!-- Styles -->
-    <?php //echo $asset->stylesheet('bootstrap.css'); ?>
-    <?php //echo $asset->stylesheet('app.css'); ?>
+    <?php echo $asset->stylesheet('bootstrap.min.css'); ?>
+    <?php echo $asset->stylesheet('app.css'); ?>
 
-  <!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="/assets/foundation/stylesheets/foundation.min.css">
-  <link rel="stylesheet" href="/assets/foundation/stylesheets/app.css">
-
-  <script src="/assets/foundation/javascripts/modernizr.foundation.js"></script>
-  <script src="/assets/foundation/javascripts/jquery.js"></script>
-  <script src="/assets/foundation/javascripts/jquery.foundation.topbar.js"></script>
-<script>$(document).foundationTopBar();</script>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -44,30 +36,23 @@ if($pageTitle = $view->head()->title()) {
   <body>
 
     <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="page-header">
+            <h1><?php echo $pageTitle; ?></h1>
+        </div>
+        </div>
+      </div>
 
-<nav class="top-bar">
-  <ul>
-    <li class="name"><h1><a href="/">Home</a></h1></li>
-    <li class="toggle-topbar"><a href="#"></a></li>
-  </ul>
-  <section>
-    <ul class="left">
-      <li><a href="/events">events</a></li>
-    </ul>
-
-  </section>
-</nav>
-
-      <div class="content twelve columns">
-	<div class="row">
-          <h1 class="twelve columns"><?php echo $pageTitle; ?></h1>
-	</div>
         <div class="row">
+        <div class="span12">
+          <div class="content">
+          
             <?php
             // Display errors
             if($errors = $view->errors()):
             ?>
-            <div class="alert-message block-message error">
+            <div class="alert alert-error">
               <p><strong>Oops!</strong> There were some errors with your request:</p>
               <ul>
               <?php foreach($errors as $field => $fieldErrors): ?>
@@ -84,14 +69,17 @@ if($pageTitle = $view->head()->title()) {
             echo $content;
             ?>
 
+          </div>
         </div>
       </div>
 
-      <footer class="twelve columns">
-        <p><a href="/">Home</a></p>
+      <footer>
+        <p>&copy; Company <?php echo date('Y'); ?></p>
       </footer>
+    </div>
 
-    </div> <!-- /container -->
+    <!-- Javascripts -->
+    <?php echo $asset->script('bootstrap.min.js'); ?>
 
   </body>
 </html>
