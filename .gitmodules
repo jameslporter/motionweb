@@ -1,0 +1,3 @@
+[submodule "app/Module/Motion/idiorm"]
+	path = app/Module/Motion/idiorm
+	url = git://github.com/CBeerta/idiorm.git
