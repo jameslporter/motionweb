@@ -3,7 +3,7 @@ $asset = $view->helper('Asset');
 
 // If page title has been set by sub-template
 if($pageTitle = $view->head()->title()) {
-	$title = $pageTitle . " - Alloy Framework";
+	$title = $pageTitle;
 } else {
 	$title = "Alloy Framework App";
   $pageTitle = "Page Title";
@@ -39,7 +39,7 @@ if($pageTitle = $view->head()->title()) {
 
       <div class="content">
         <div class="page-header">
-          <h1><?php echo $pageTitle; ?></h1>
+          <h1><a href="/"><?php echo $pageTitle; ?></a></h1>
         </div>
         <div class="row">
           <div class="span14">
@@ -70,7 +70,7 @@ if($pageTitle = $view->head()->title()) {
       </div>
 
       <footer>
-        <p>&copy; Company 2011</p>
+        <p><a href="/">Home</a></p>
       </footer>
 
     </div> <!-- /container -->
