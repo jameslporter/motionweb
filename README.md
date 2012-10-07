@@ -2,12 +2,17 @@ Motion Web
 ===================
 A web app to view and manage motion. You can check camera status, enable/disable motion per camera, view motion detection events, delete events & related file assets.
 
-Powered by
+Powered by:
+
 Motion - a software motion detector - https://github.com/sackmotion/motion
+
 Motion's site/documention http://www.lavrsen.dk/foswiki/bin/view/Motion/WebHome
+
 Alloy Framework
+
 http://alloyframework.org
 
+Idiorm : https://github.com/j4mie/idiorm
 
 
 Configuration
@@ -32,4 +37,4 @@ Once this is setup correctly you should start seeing entries in the security tab
 
 The last major step is to configure the motionweb app to find your motion database. You will find the config file in app/config/app.php with $app['database']['master'] being the only relevant configuration. Only host/username/password/database fields are used.
 
-You should new be able to load the motionweb app in your browser!
+You should now be able to load the motionweb app in your browser!
