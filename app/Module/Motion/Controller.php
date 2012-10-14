@@ -55,7 +55,7 @@ class Controller extends App\Module\ControllerAbstract
     public function eventAction(Request $request)
     {
 		$date = date("Y-m-d H:i:s", $request->param('stamp'));
-        $frames = \ORM::for_table('security')->order_by_asc('time_stamp')->where('file_type',1)->where('event_time_stamp',$date)->find_many();
+        $frames = \ORM::for_table('security')->order_by_asc('time_stamp')->where('file_type',1)->where('event_time_stamp',$date)->where('camera',$request->param('camera'))->find_many();
         $video = \ORM::for_table('security')->where('file_type',8)->where('event_time_stamp',$date)->find_one();
         foreach($frames as $frame)
         {
@@ -69,6 +69,7 @@ class Controller extends App\Module\ControllerAbstract
     }
     public function eventDeleteAction(Request $request)
     {
+//	var_dump($request);die();
     	$date = date("Y-m-d H:i:s", $request->param('stamp'));
         $frames = \ORM::for_table('security')->where('event_time_stamp',$date)->find_many();
         foreach($frames as $frame){
@@ -77,7 +78,11 @@ class Controller extends App\Module\ControllerAbstract
                 }
         }
         $frames = \ORM::for_table('security')->where('event_time_stamp',$date)->delete_many();
-        return $this->kernel->redirect('/events',307);
+	if($request->isAjax()){
+		return(json_encode('deleted'));
+	}else{
+		return $this->kernel->redirect('/events',307);
+	}
     }
     /**
      * Disarm
@@ -93,6 +98,31 @@ class Controller extends App\Module\ControllerAbstract
     {
     	$this->motion->detection('start', $request->param('camera'));
     	return $this->kernel->redirect('/',307);
+    }
+    public function cleanAction(){
+        $status = $this->motion->statusCheck();
+	$files = array();
+	foreach($status as $cam){
+		if($scan = scandir($cam['config']['target_dir'])){
+			if(count($scan) > 3){
+				array_shift($scan);array_shift($scan); //shift the . and .. listings out of the results
+			}
+			array_walk($scan,function(&$val,$key,$path){$val = $path.'/'.$val;},$cam['config']['target_dir']);
+			$files = array_merge($scan,$files);
+		}
+	}
+	$filesKeep = \ORM::for_table('security')->select('filename')->find_many();
+	foreach($filesKeep as $key => $keeper){
+		$zkeeper = $keeper->as_array();
+		$filesToKeep[] = $zkeeper['filename'];
+	}
+	$diff = array_diff($files,$filesToKeep);
+	$ret = "\n".count($diff)." diff and keepers have ".count($filesToKeep)."\n";
+	$ret .= 'will start deleting files now';
+	foreach($diff as $file){
+		unlink($file);
+	}
+	return($ret);
     }
     public function relativeTime($stamp)
     {

@@ -23,9 +23,17 @@ if($pageTitle = $view->head()->title()) {
     <![endif]-->
 
     <!-- Styles -->
-    <?php echo $asset->stylesheet('bootstrap.css'); ?>
-    <?php echo $asset->stylesheet('app.css'); ?>
+    <?php //echo $asset->stylesheet('bootstrap.css'); ?>
+    <?php //echo $asset->stylesheet('app.css'); ?>
 
+  <!-- Included CSS Files (Compressed) -->
+  <link rel="stylesheet" href="/assets/foundation/stylesheets/foundation.min.css">
+  <link rel="stylesheet" href="/assets/foundation/stylesheets/app.css">
+
+  <script src="/assets/foundation/javascripts/modernizr.foundation.js"></script>
+  <script src="/assets/foundation/javascripts/jquery.js"></script>
+  <script src="/assets/foundation/javascripts/jquery.foundation.topbar.js"></script>
+<script>$(document).foundationTopBar();</script>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -37,13 +45,27 @@ if($pageTitle = $view->head()->title()) {
 
     <div class="container">
 
-      <div class="content">
-        <div class="page-header">
-          <h1><a href="/"><?php echo $pageTitle; ?></a></h1>
-        </div>
+<nav class="top-bar">
+  <ul>
+    <li class="name"><h1><a href="/">Home</a></h1></li>
+    <li class="toggle-topbar"><a href="#"></a></li>
+  </ul>
+  <section>
+    <ul class="left">
+      <li><a href="/events">events</a></li>
+    </ul>
+
+    <ul class="right">
+      <li><a href="#">Link</a></li>
+    </ul>
+  </section>
+</nav>
+
+      <div class="content twelve columns">
+	<div class="row">
+          <h1 class="twelve columns"><?php echo $pageTitle; ?></h1>
+	</div>
         <div class="row">
-          <div class="span14">
-            
             <?php
             // Display errors
             if($errors = $view->errors()):
@@ -65,11 +87,10 @@ if($pageTitle = $view->head()->title()) {
             echo $content;
             ?>
 
-          </div>
         </div>
       </div>
 
-      <footer>
+      <footer class="twelve columns">
         <p><a href="/">Home</a></p>
       </footer>
 

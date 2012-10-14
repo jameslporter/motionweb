@@ -4,6 +4,11 @@
 
 
 // Default routes distributed with Alloy
+$router->route('clean', '/clean')
+	->defaults(array(
+		'module' => 'motion',
+		'action' => 'clean'
+	));
 $router->route('disarm', '/disarm/<:camera>')
 	->defaults(array(
 		'module' => 'motion',
@@ -16,8 +21,14 @@ $router->route('arm', '/arm/<:camera>')
 		'action' => 'arm',
 		'format' => 'html'
 	));
+$router->route('motionEventDelete', '/event/delete/<:stamp>')
+	->defaults(array(
+		'module' => 'motion',
+		'action' => 'eventDelete',
+		'format' => 'html'
+	));
 
-$router->route('motionEvent', '/event/<:stamp>')
+$router->route('motionEvent', '/event/<:camera>/<:stamp>')
 	->defaults(array(
 		'module' => 'motion',
 		'action' => 'event',
@@ -27,12 +38,6 @@ $router->route('motionEvents', '/events')
 	->defaults(array(
 		'module' => 'motion',
 		'action' => 'events',
-		'format' => 'html'
-	));
-$router->route('motionEventDelete', '/event/delete/<:stamp>')
-	->defaults(array(
-		'module' => 'motion',
-		'action' => 'eventDelete',
 		'format' => 'html'
 	));
 require $kernel->config('alloy.path.config') . '/routes.php';
