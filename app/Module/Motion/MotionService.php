@@ -20,7 +20,9 @@ class MotionService{
 				array_shift($returned);
 				if(count($returned) > 0){
 					foreach($returned as $cam){
-						$this->cameras[] = $cam;
+						if(!is_null($cam)){
+							$this->cameras[] = $cam;
+						}
 					}
 				}
 			}
@@ -53,12 +55,15 @@ class MotionService{
 			$url = '/detection/'.$action;
 			$result = $this->fetch($camera,$url);
 		}else{
-			foreach($this->cameras as $camera){
-				$result = $this->fetch($camera, '/detection/'.$action);
+			if($camera == 'all'){
+				foreach($this->cameras as $camera){
+					$result = $this->fetch($camera, '/detection/'.$action);
+				}
 			}
 		}
 	}
-	private function fetch($camera, $url){
+	private function fetch($camera = 0, $url){
+		if(is_null($camera) || is_null($url) || $camera == ''){ return; }
 		return file_get_contents($this->proto.$this->host.':'.$this->port.'/'.$camera.$url);
 	}
 }

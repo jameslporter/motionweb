@@ -55,9 +55,6 @@ if($pageTitle = $view->head()->title()) {
       <li><a href="/events">events</a></li>
     </ul>
 
-    <ul class="right">
-      <li><a href="#">Link</a></li>
-    </ul>
   </section>
 </nav>
 
