@@ -65,7 +65,7 @@ class Controller extends App\Module\ControllerAbstract
 	        	$frame->filename = '/capture/'.$frame->camera.'/'.basename($frame->filename);
 	        }
         }
-        return $this->template(__FUNCTION__)->set(array('frames' => $frames, 'stamp' => $request->param('stamp'), 'video' => basename($video->filename), 'date' => $date));
+        return $this->template(__FUNCTION__)->set(array('frames' => $frames, 'stamp' => $request->param('stamp'), 'video' => '/captured/'.basename($video->filename), 'date' => $date));
     }
     public function eventDeleteAction(Request $request)
     {
