@@ -7,8 +7,11 @@ $view->head()->title('Welcome to motionweb!');
 <p><a href="/events">View Recent Events</a></p>
 
 <h3>Camera Status</h3>
-<h1><a href="/arm/all" data-role="button">Arm All</a></h1>
-<h1><a href="/disarm/all" data-role="button">Disarm All</a></h1>
+<div class="btn-group" data-toggle="buttons-radio">
+    <a href="/arm/all"><button type="button" class="btn btn-primary">Arm All</button></a>
+    <a href="/disarm/all"><button type="button" class="btn btn-primary">Disarm All</button></a>
+</div>
+
 <ul>
 <?php
 foreach($statusCheck as $camID => $status){

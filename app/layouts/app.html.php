@@ -3,7 +3,7 @@ $asset = $view->helper('Asset');
 
 // If page title has been set by sub-template
 if($pageTitle = $view->head()->title()) {
-	$title = $pageTitle . " - Alloy Framework";
+	$title = $pageTitle;
 } else {
 	$title = "Alloy Framework App";
   $pageTitle = "Page Title";
@@ -16,6 +16,7 @@ if($pageTitle = $view->head()->title()) {
     <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -24,7 +25,7 @@ if($pageTitle = $view->head()->title()) {
 
     <!-- Styles -->
     <?php echo $asset->stylesheet('bootstrap.min.css'); ?>
-    <?php echo $asset->stylesheet('app.css'); ?>
+    <?php echo $asset->stylesheet('bootstrap-responsive.min.css'); ?>
 
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
@@ -34,7 +35,15 @@ if($pageTitle = $view->head()->title()) {
   </head>
 
   <body>
-
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">MotionWeb</a>
+        <ul class="nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="events">Recent Events</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="container">
       <div class="row">
         <div class="span12">
@@ -79,6 +88,7 @@ if($pageTitle = $view->head()->title()) {
     </div>
 
     <!-- Javascripts -->
+    <?php echo $asset->script('jquery.min.js'); ?>
     <?php echo $asset->script('bootstrap.min.js'); ?>
 
   </body>
