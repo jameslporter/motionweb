@@ -27,6 +27,8 @@ if($pageTitle = $view->head()->title()) {
     <?php echo $asset->stylesheet('bootstrap.min.css'); ?>
     <?php echo $asset->stylesheet('bootstrap-responsive.min.css'); ?>
 
+    <?php echo $asset->script('jquery.min.js'); ?>
+    <?php echo $asset->script('bootstrap.min.js'); ?>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -88,8 +90,7 @@ if($pageTitle = $view->head()->title()) {
     </div>
 
     <!-- Javascripts -->
-    <?php echo $asset->script('jquery.min.js'); ?>
-    <?php echo $asset->script('bootstrap.min.js'); ?>
+
 
   </body>
 </html>

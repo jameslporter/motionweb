@@ -28,8 +28,9 @@ class Controller extends App\Module\ControllerAbstract
     }
     public function indexAction(Request $request){
     	$status = $this->motion->statusCheck();
+
     	return $this->template(__FUNCTION__)
-        	->set(array('statusCheck' => $status));
+        	->set(array('statusCheck' => $status, 'error' => ($this->motion->unableToConnect == true ? 'Unable to connect to motion.': ''),));
     }
 
 
@@ -92,12 +93,20 @@ class Controller extends App\Module\ControllerAbstract
     public function disarmAction(Request $request)
     {
     	$this->motion->detection('pause', $request->param('camera'));
-    	return $this->kernel->redirect('/',307);
+	if($request->isAjax()){
+		return(json_encode('disarmed'));
+	}else{
+	    return $this->kernel->redirect('/',307);
+	}
     }
     public function armAction(Request $request)
     {
     	$this->motion->detection('start', $request->param('camera'));
-    	return $this->kernel->redirect('/',307);
+	if($request->isAjax()){
+		return(json_encode('armed'));
+	}else{
+	    return $this->kernel->redirect('/',307);
+	}
     }
     public function cleanAction(){
         $status = $this->motion->statusCheck();
