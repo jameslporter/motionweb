@@ -39,11 +39,21 @@ if($pageTitle = $view->head()->title()) {
   <body>
     <div class="navbar">
       <div class="navbar-inner">
-        <a class="brand" href="#">MotionWeb</a>
-        <ul class="nav">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="events">Recent Events</a></li>
-        </ul>
+	<div class="container">
+	  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	  </a>
+	  <a class="brand" href="#">MotionWeb</a>
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li class="active"><a href="/">Home</a></li>
+	      <li><a href="events">Recent Events</a></li>
+	    </ul>
+	  </div>
+	</div>
       </div>
     </div>
     <div class="container">

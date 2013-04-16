@@ -63,11 +63,11 @@ foreach($statusCheck as $camID => $status){
 ?>
 <h3>All Camera Status</h3>
 <div class="btn-group" data-toggle="buttons-radio" name="armall" id="armall">
-    <? echo '<button type="button" class="btn btn-primary '.($nonactive == false?'active':'').'">';?>
+    <? echo '<button type="button" class="btn btn-success '.($nonactive == false?'active':'').'">';?>
         Arm All
         <input type='radio' name='armall' style='display: block; position: absolute; opacity: hidden; visibility: hidden' value='arm'/>
     </button>
-    <? echo '<button type="button" class="btn btn-primary '.($active == false?'active':'').'">';?>
+    <? echo '<button type="button" class="btn btn-danger '.($active == false?'active':'').'">';?>
         Disarm All
         <input type='radio' name='armall' style='display: block; position: absolute; opacity: hidden; visibility: hidden' value='disarm'/>
     </button>
