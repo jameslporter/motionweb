@@ -49,8 +49,8 @@ if($pageTitle = $view->head()->title()) {
 	  <a class="brand" href="#">MotionWeb</a>
 	  <div class="nav-collapse collapse">
 	    <ul class="nav">
-	      <li class="active"><a href="/">Home</a></li>
-	      <li><a href="events">Recent Events</a></li>
+	      <li><a href="/">Home</a></li>
+	      <li><a href="/events">Recent Events</a></li>
 	    </ul>
 	  </div>
 	</div>
