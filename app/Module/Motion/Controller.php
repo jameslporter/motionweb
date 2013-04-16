@@ -94,7 +94,7 @@ class Controller extends App\Module\ControllerAbstract
     {
     	$this->motion->detection('pause', $request->param('camera'));
 	if($request->isAjax()){
-		return(json_encode('disarmed'));
+		return(json_encode(array('status' => 'disarmed')));
 	}else{
 	    return $this->kernel->redirect('/',307);
 	}
@@ -103,7 +103,7 @@ class Controller extends App\Module\ControllerAbstract
     {
     	$this->motion->detection('start', $request->param('camera'));
 	if($request->isAjax()){
-		return(json_encode('armed'));
+		return(json_encode(array('status' => 'armed')));
 	}else{
 	    return $this->kernel->redirect('/',307);
 	}
