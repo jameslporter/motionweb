@@ -73,20 +73,29 @@ foreach($statusCheck as $camID => $status){
     </button>
 </div>
 <p></p>
-<h3>Individual Camera Status</h3>
-<div name="cameras" id="cameras">
+<div name="cameras" id="cameras" >
+
+<table class="table table-bordered table-hover">
+    <caption><h3>Individual Camera Status</h3></caption>
+    <thead>
+<tr><th>Camera Id</th><th>Status</th><th>Stream</th></tr>
+</thead>
+    <tbody>
 <?php
 foreach($statusCheck as $camID => $status){
-	echo '<div id="'.$camID.'" name="'.$camID.'"><strong>Camera #'.$camID. ' </strong>';
+        echo '<tr>';
+        echo '<td>'.$camID.'</td>';
+	echo '<div id="'.$camID.'" name="'.$camID.'"><td>';
 	if($status['detectionOn']){
                 echo '<button type="button" class="btn btn-danger">Disarm</button>';
-		//echo '<a href="/disarm/'.$camID.'">Disarm</a>';
 	}else{
                 echo '<button type="button" class="btn btn-success">Arm</button>';
-		//echo '<a href="/arm/'.$camID.'">Arm</a>';
 	}
-	echo ' <a href="http://'.$_SERVER['HTTP_HOST'].':'.$status['config']['stream_port'].'" target="_new">Live Stream</a>';
-	echo '</div>';
+	echo '</td></div>';
+        echo '<td><a href="http://'.$_SERVER['HTTP_HOST'].':'.$status['config']['stream_port'].'" target="_new">Live Stream</a></td>';
+        echo '</tr>';
 }
 ?>
+    </tbody>
+</table>
 </div>

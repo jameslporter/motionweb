@@ -1,4 +1,12 @@
 <?php
+function echoActiveClassIfRequestMatches($requestUri)
+{
+    $current_file_name = basename($_SERVER['REQUEST_URI']);
+
+    if ($current_file_name == $requestUri)
+        echo 'class="active"';
+}
+
 $asset = $view->helper('Asset');
 
 // If page title has been set by sub-template
@@ -49,8 +57,8 @@ if($pageTitle = $view->head()->title()) {
 	  <a class="brand" href="#">MotionWeb</a>
 	  <div class="nav-collapse collapse">
 	    <ul class="nav">
-	      <li><a href="/">Home</a></li>
-	      <li><a href="/events">Recent Events</a></li>
+	      <li <?=echoActiveClassIfRequestMatches("")?>><a href="/">Home</a></li>
+	      <li <?=echoActiveClassIfRequestMatches("events")?>><a href="/events">Recent Events</a></li>
 	    </ul>
 	  </div>
 	</div>
