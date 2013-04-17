@@ -85,13 +85,13 @@ foreach($statusCheck as $camID => $status){
 foreach($statusCheck as $camID => $status){
         echo '<tr>';
         echo '<td>'.$camID.'</td>';
-	echo '<div id="'.$camID.'" name="'.$camID.'"><td>';
+	echo '<td id="'.$camID.'" name="'.$camID.'">';
 	if($status['detectionOn']){
                 echo '<button type="button" class="btn btn-danger">Disarm</button>';
 	}else{
                 echo '<button type="button" class="btn btn-success">Arm</button>';
 	}
-	echo '</td></div>';
+	echo '</td>';
         echo '<td><a href="http://'.$_SERVER['HTTP_HOST'].':'.$status['config']['stream_port'].'" target="_new">Live Stream</a></td>';
         echo '</tr>';
 }
