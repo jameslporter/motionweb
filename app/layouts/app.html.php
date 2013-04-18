@@ -54,7 +54,7 @@ if($pageTitle = $view->head()->title()) {
 	    <span class="icon-bar"></span>
 	    <span class="icon-bar"></span>
 	  </a>
-	  <a class="brand" href="#">MotionWeb</a>
+	  <a class="brand" href="/">MotionWeb</a>
 	  <div class="nav-collapse collapse">
 	    <ul class="nav">
 	      <li <?=echoActiveClassIfRequestMatches("")?>><a href="/">Home</a></li>

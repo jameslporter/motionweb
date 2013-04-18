@@ -58,6 +58,22 @@ class Controller extends App\Module\ControllerAbstract
 		}
         return $this->template(__FUNCTION__)->set(array('events' => $events));
     }
+    
+    public function eventsByCameraAction(Request $request)
+    {
+	$camid = $request->param('camera');
+	$events = \ORM::for_table('security')->distinct('event_time_stamp')->group_by('event_time_stamp')->where('file_type',1)->where('camera',$camid)->order_by_desc('event_time_stamp')->find_many();
+	foreach($events as $event){
+	    if(strstr($event->filename,'captured')){
+	    $event->filename = '/captured/'.basename($event->filename);
+	}else{
+	    $event->filename = '/capture/'.$event->camera.'/'.basename($event->filename);
+	}
+	    $event->relative = $this->relativeTime(strtotime($event->event_time_stamp));
+	    $event->event_time_stamp = strtotime($event->event_time_stamp);
+	}
+        return $this->template('eventsAction')->set(array('events' => $events));
+    }
     /**
      * Event
      * @method GET

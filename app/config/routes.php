@@ -40,6 +40,12 @@ $router->route('motionEvents', '/events')
 		'action' => 'events',
 		'format' => 'html'
 	));
+$router->route('motionEventsByCamera', '/eventsByCamera/<:camera>')
+	->defaults(array(
+		'module' => 'motion',
+		'action' => 'eventsByCamera',
+		'format' => 'html'
+	));
 require $kernel->config('alloy.path.config') . '/routes.php';
 
 $router->route('default', '/')
