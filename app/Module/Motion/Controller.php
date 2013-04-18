@@ -27,9 +27,20 @@ class Controller extends App\Module\ControllerAbstract
 
     }
     public function indexAction(Request $request){
+	$snappath = array();
     	$status = $this->motion->statusCheck();
+	
+	foreach($status as $key => $lastsnap){
+	    if(strstr($lastsnap['config']['target_dir'],'captured')){
+	        $snappath[$key] = '/captured/';
+	    }else{
+	      	$snappath[$key] = '/capture/'.$key.'/';
+	    }
+	}
+
     	return $this->template(__FUNCTION__)
-        	->set(array('statusCheck' => $status));
+        	->set(array('statusCheck' => $status, 'lastsnap' => $snappath,
+			    'error' => ($this->motion->unableToConnect == true ? 'Unable to connect to motion.': ''),));
     }
 
 
@@ -46,6 +57,22 @@ class Controller extends App\Module\ControllerAbstract
 			$event->event_time_stamp = strtotime($event->event_time_stamp);
 		}
         return $this->template(__FUNCTION__)->set(array('events' => $events));
+    }
+    
+    public function eventsByCameraAction(Request $request)
+    {
+	$camid = $request->param('camera');
+	$events = \ORM::for_table('security')->distinct('event_time_stamp')->group_by('event_time_stamp')->where('file_type',1)->where('camera',$camid)->order_by_desc('event_time_stamp')->find_many();
+	foreach($events as $event){
+	    if(strstr($event->filename,'captured')){
+	    $event->filename = '/captured/'.basename($event->filename);
+	}else{
+	    $event->filename = '/capture/'.$event->camera.'/'.basename($event->filename);
+	}
+	    $event->relative = $this->relativeTime(strtotime($event->event_time_stamp));
+	    $event->event_time_stamp = strtotime($event->event_time_stamp);
+	}
+        return $this->template('eventsAction')->set(array('events' => $events));
     }
     /**
      * Event
@@ -65,7 +92,7 @@ class Controller extends App\Module\ControllerAbstract
 	        	$frame->filename = '/capture/'.$frame->camera.'/'.basename($frame->filename);
 	        }
         }
-        return $this->template(__FUNCTION__)->set(array('frames' => $frames, 'stamp' => $request->param('stamp'), 'video' => basename($video->filename), 'date' => $date));
+        return $this->template(__FUNCTION__)->set(array('frames' => $frames, 'stamp' => $request->param('stamp'), 'video' => '/captured/'.basename($video->filename), 'date' => $date));
     }
     public function eventDeleteAction(Request $request)
     {
@@ -92,12 +119,20 @@ class Controller extends App\Module\ControllerAbstract
     public function disarmAction(Request $request)
     {
     	$this->motion->detection('pause', $request->param('camera'));
-    	return $this->kernel->redirect('/',307);
+	if($request->isAjax()){
+		return(json_encode(array('status' => 'disarmed')));
+	}else{
+	    return $this->kernel->redirect('/',307);
+	}
     }
     public function armAction(Request $request)
     {
     	$this->motion->detection('start', $request->param('camera'));
-    	return $this->kernel->redirect('/',307);
+	if($request->isAjax()){
+		return(json_encode(array('status' => 'armed')));
+	}else{
+	    return $this->kernel->redirect('/',307);
+	}
     }
     public function cleanAction(){
         $status = $this->motion->statusCheck();

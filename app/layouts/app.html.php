@@ -1,4 +1,12 @@
 <?php
+function echoActiveClassIfRequestMatches($requestUri)
+{
+    $current_file_name = basename($_SERVER['REQUEST_URI']);
+
+    if ($current_file_name == $requestUri)
+        echo 'class="active"';
+}
+
 $asset = $view->helper('Asset');
 
 // If page title has been set by sub-template
@@ -16,6 +24,7 @@ if($pageTitle = $view->head()->title()) {
     <title><?php echo $title; ?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -23,17 +32,11 @@ if($pageTitle = $view->head()->title()) {
     <![endif]-->
 
     <!-- Styles -->
-    <?php //echo $asset->stylesheet('bootstrap.css'); ?>
-    <?php //echo $asset->stylesheet('app.css'); ?>
+    <?php echo $asset->stylesheet('bootstrap.min.css'); ?>
+    <?php echo $asset->stylesheet('bootstrap-responsive.min.css'); ?>
 
-  <!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="/assets/foundation/stylesheets/foundation.min.css">
-  <link rel="stylesheet" href="/assets/foundation/stylesheets/app.css">
-
-  <script src="/assets/foundation/javascripts/modernizr.foundation.js"></script>
-  <script src="/assets/foundation/javascripts/jquery.js"></script>
-  <script src="/assets/foundation/javascripts/jquery.foundation.topbar.js"></script>
-<script>$(document).foundationTopBar();</script>
+    <?php echo $asset->script('jquery.min.js'); ?>
+    <?php echo $asset->script('bootstrap.min.js'); ?>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -42,32 +45,43 @@ if($pageTitle = $view->head()->title()) {
   </head>
 
   <body>
-
-    <div class="container">
-
-<nav class="top-bar">
-  <ul>
-    <li class="name"><h1><a href="/">Home</a></h1></li>
-    <li class="toggle-topbar"><a href="#"></a></li>
-  </ul>
-  <section>
-    <ul class="left">
-      <li><a href="/events">events</a></li>
-    </ul>
-
-  </section>
-</nav>
-
-      <div class="content twelve columns">
-	<div class="row">
-          <h1 class="twelve columns"><?php echo $pageTitle; ?></h1>
+    <div class="navbar">
+      <div class="navbar-inner">
+	<div class="container">
+	  <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	  </a>
+	  <a class="brand" href="/">MotionWeb</a>
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li <?=echoActiveClassIfRequestMatches("")?>><a href="/">Home</a></li>
+	      <li <?=echoActiveClassIfRequestMatches("events")?>><a href="/events">Recent Events</a></li>
+	    </ul>
+	  </div>
 	</div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="page-header">
+            <h1><?php echo $pageTitle; ?></h1>
+        </div>
+        </div>
+      </div>
+
         <div class="row">
+        <div class="span12">
+          <div class="content">
+          
             <?php
             // Display errors
             if($errors = $view->errors()):
             ?>
-            <div class="alert-message block-message error">
+            <div class="alert alert-error">
               <p><strong>Oops!</strong> There were some errors with your request:</p>
               <ul>
               <?php foreach($errors as $field => $fieldErrors): ?>
@@ -84,14 +98,17 @@ if($pageTitle = $view->head()->title()) {
             echo $content;
             ?>
 
+          </div>
         </div>
       </div>
 
-      <footer class="twelve columns">
-        <p><a href="/">Home</a></p>
+      <footer>
+        <p>&copy; Company <?php echo date('Y'); ?></p>
       </footer>
+    </div>
 
-    </div> <!-- /container -->
+    <!-- Javascripts -->
+
 
   </body>
 </html>

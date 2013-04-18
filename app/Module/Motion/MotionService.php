@@ -3,33 +3,42 @@ namespace Module\Motion;
 
 class MotionService{
 	private $proto = 'http://';
+	private $cameras = array();
+	public $unableToConnect;
+	
 	public function __construct($host = 'localhost', $port = '8080'){
 		$this->host = $host;
 		$this->port = $port;
-		$threads = file_get_contents('http://'.$host.':'.$port);
-		//split the RAW response by newline character
-		//set your motion.conf to webcontrol_html_output off
-		$returned = explode("\n",$threads);
-		//TODO: trim off the standard response, will have to implement error check later
-		array_shift($returned);
-		if($returned[0] == 0){
-			//we have the first camera! and the index matches up
-			$this->cameras[] = $returned[0];
-			//WIP:don't have multiple cams yet, but this is gist
-			if(is_array($returned)){
-				array_shift($returned);
-				if(count($returned) > 0){
-					foreach($returned as $cam){
-						if(!is_null($cam)){
-							$this->cameras[] = $cam;
+
+		$threads = @file_get_contents('http://'.$host.':'.$port);
+		if($threads !== false){
+			//split the RAW response by newline character
+			//set your motion.conf to webcontrol_html_output off
+			$returned = explode("\n",$threads);
+			//TODO: trim off the standard response, will have to implement error check later
+			array_shift($returned);
+			if($returned[0] == 0){
+				//we have the first camera! and the index matches up
+				$this->cameras[] = $returned[0];
+				//WIP:don't have multiple cams yet, but this is gist
+				if(is_array($returned)){
+					array_shift($returned);
+					if(count($returned) > 0){
+						foreach($returned as $cam){
+							if(!is_null($cam)){
+								$this->cameras[] = $cam;
+							}
 						}
 					}
 				}
+				//WIP:end
 			}
-			//WIP:end
+		} else {
+			$this->unableToConnect = true;
 		}
 	}
 	function statusCheck(){
+		$ret = array();
 		foreach($this->cameras as $camera){
 			if(is_numeric($camera)){
 				$result = $this->fetch($camera, '/detection/status');
