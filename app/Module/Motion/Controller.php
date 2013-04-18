@@ -27,10 +27,20 @@ class Controller extends App\Module\ControllerAbstract
 
     }
     public function indexAction(Request $request){
+	$snappath = array();
     	$status = $this->motion->statusCheck();
+	
+	foreach($status as $key => $lastsnap){
+	    if(strstr($lastsnap['config']['target_dir'],'captured')){
+	        $snappath[$key] = '/captured/';
+	    }else{
+	      	$snappath[$key] = '/capture/'.$key.'/';
+	    }
+	}
 
     	return $this->template(__FUNCTION__)
-        	->set(array('statusCheck' => $status, 'error' => ($this->motion->unableToConnect == true ? 'Unable to connect to motion.': ''),));
+        	->set(array('statusCheck' => $status, 'lastsnap' => $snappath,
+			    'error' => ($this->motion->unableToConnect == true ? 'Unable to connect to motion.': ''),));
     }
 
 

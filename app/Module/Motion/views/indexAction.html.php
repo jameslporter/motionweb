@@ -42,6 +42,7 @@ $view->head()->title('Welcome to motionweb!');
                 }
             });
         });
+        $('.thumbnails a').tooltip({placement: 'right',});
     });
 </script>
 
@@ -78,11 +79,15 @@ foreach($statusCheck as $camID => $status){
 <table class="table table-bordered table-hover">
     <caption><h3>Individual Camera Status</h3></caption>
     <thead>
-<tr><th>Camera Id</th><th>Status</th><th>Stream</th></tr>
+<tr><th>Camera Id</th><th>Status</th><th>Last Snapshot</th></tr>
 </thead>
     <tbody>
 <?php
 foreach($statusCheck as $camID => $status){
+        $snapshots = false;
+        if($status['config']['snapshot_interval'] > 0){
+            $snapshots = true;
+        }
         echo '<tr>';
         echo '<td>'.$camID.'</td>';
 	echo '<td id="'.$camID.'" name="'.$camID.'">';
@@ -92,7 +97,14 @@ foreach($statusCheck as $camID => $status){
                 echo '<button type="button" class="btn btn-success">Arm</button>';
 	}
 	echo '</td>';
-        echo '<td><a href="http://'.$_SERVER['HTTP_HOST'].':'.$status['config']['stream_port'].'" target="_new">Live Stream</a></td>';
+        echo '<td><ul class="thumbnails"><li class="span2">';
+        echo '<a href="http://'.$_SERVER['HTTP_HOST'].':'.$status['config']['stream_port'].'" target="_new"'.($snapshots?' class="thumbnail" data-toggle="tooltip" title="Live Stream"':'').'>';
+        if($snapshots){
+            echo '<img src="'.$lastsnap[$camID].'lastsnap.jpg"  alt="Live Stream"/>';
+        } else {
+            echo 'Live Stream';
+        }
+        echo '</a></li></ul></td>';
         echo '</tr>';
 }
 ?>

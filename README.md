@@ -33,6 +33,8 @@ Remember that motionweb is a web app. So make sure you have this checked out to 
 
 You will also want to set the motion config target_dir to the full path of either app/www/captured/ for a single camera or app/www/capture/[cam#]/ for multiple cameras. Motionweb is designed to check the filename that was logged and try to guess the right http url using the directory structure i just described. Note that if you really want you can symlink motionweb's directory structure to where ever you want. The functionality should still work(check permissions so the your web user can delete files in the destination directory).
 
+If you enable snapshots (snapshot_interval in the motion config), the front page will display the lastsnap as a thumbnail for the cameras.
+
 Once this is setup correctly you should start seeing entries in the security table and still/movie files in the capture directory when motion is detected.
 
 The last major step is to configure the motionweb app to find your motion database. You will find the config file in app/config/app.php with $app['database']['master'] being the only relevant configuration. Only host/username/password/database fields are used.
